@@ -3,59 +3,56 @@ const path = require('path');
 const express = require('express');
 const axios = require('axios');
 const coreJsCompat = require('@babel/preset-env/data/core-js-compat');
+const Controller = require('./controller');
+const cors = require('cors');
+const mongoose = require('mongoose');
 
 const PORT = 3000;
 
 const app = express();
 app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
+
+// const uri = 'mongodb+srv://starnose:9ADoo%aaZx6s@cluster0.slydjzd.mongodb.net/?retryWrites=true&w=majority'
+mongoose.connect('mongodb+srv://starnose:9ADoo%25aaZx6s@cluster0.slydjzd.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connection.once('open', () => console.log('Connected to database.'));
 
 app.get('/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname, '../index.html'))
 })
 
-// user inputs a city name
-const cityName = 'Portland';
 
-const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&key=AIzaSyBtfcxOznbnQFJHSdQTgsSZVRbvpOZNdKU`;
-// Get coordinates from city name
-axios.get(url)
-    .then(res => {
-        const coordinates = { lat: res.data.results[0].geometry.location.lat, lon: res.data.results[0].geometry.location.lng } // returns { lat: 51.5, lon: -0.127 }
-        console.log('coordinates are: ', coordinates);
-        // Get nearby stations from coordinates
-        const options = {
-            method: 'GET',
-            url: 'https://meteostat.p.rapidapi.com/stations/nearby',
-            params: coordinates, // { lat: 51.5, lng: -0.127 }
-            headers: {
-                'X-RapidAPI-Key': 'ca2594298amsh94fb12fd4497783p1553c7jsn3ff6ba05d679',
-                'X-RapidAPI-Host': 'meteostat.p.rapidapi.com'
-            }
-        };
-        // Get nearby stations from coordinates
-        axios.request(options)
-            .then(res => {
-                // console.log('stations data: ');
-                const stationID = res.data.data[0].id; // 03779
+const router = express.Router();
+app.use('/', router);
 
-                const options = {
-                    method: 'GET',
-                    url: 'https://meteostat.p.rapidapi.com/stations/monthly',
-                    params: { station: stationID, start: '2020-01-01', end: '2020-12-31', units: 'imperial' },
-                    headers: {
-                        'X-RapidAPI-Key': '486cee67b7msh6fe5f060a910d1ap176ef4jsncf8e8f8d110e',
-                        'X-RapidAPI-Host': 'meteostat.p.rapidapi.com'
-                    }
-                };
-                // get the monthly station data from station id
-                axios.request(options)
-                    .then(res => {
-                        console.log('monthly station data: ')
-                        console.log(res.data.data);
-                    })
-            })
-    })
+
+// Get monthly weather data for a city
+// http://localhost:3000/search
+router.post('/search', Controller.getMonthlyData, (req, res, next) => {
+    // console.log('res.locals in server.js: ', res.locals.weather);
+    res.sendStatus(200);
+    // .json(res.locals.weather);
+});
+
+router.get('/search', Controller.getAllData, (req, res, next) => {
+    res.status(200);
+})
+
+
+
+
+
+
+
+
+
+
+// // user inputs a city name
+// const cityName = 'Portland';
+
+
 
 
 
