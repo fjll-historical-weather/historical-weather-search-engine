@@ -2,6 +2,7 @@
 const path = require('path');
 const express = require('express');
 const axios = require('axios');
+const coreJsCompat = require('@babel/preset-env/data/core-js-compat');
 
 const PORT = 3000;
 
@@ -13,110 +14,47 @@ app.get('/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname, '../index.html'))
 })
 
+// user inputs a city name
+const cityName = 'Portland';
 
-axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=London&key=AIzaSyBtfcxOznbnQFJHSdQTgsSZVRbvpOZNdKU')
-    // .then(res => console.log(res.results[0].geometry.location));
-    .then(res => console.log(res.data.results[0].geometry.location));
+const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&key=AIzaSyBtfcxOznbnQFJHSdQTgsSZVRbvpOZNdKU`;
+// Get coordinates from city name
+axios.get(url)
+    .then(res => {
+        const coordinates = { lat: res.data.results[0].geometry.location.lat, lon: res.data.results[0].geometry.location.lng } // returns { lat: 51.5, lon: -0.127 }
+        console.log('coordinates are: ', coordinates);
+        // Get nearby stations from coordinates
+        const options = {
+            method: 'GET',
+            url: 'https://meteostat.p.rapidapi.com/stations/nearby',
+            params: coordinates, // { lat: 51.5, lng: -0.127 }
+            headers: {
+                'X-RapidAPI-Key': 'ca2594298amsh94fb12fd4497783p1553c7jsn3ff6ba05d679',
+                'X-RapidAPI-Host': 'meteostat.p.rapidapi.com'
+            }
+        };
+        // Get nearby stations from coordinates
+        axios.request(options)
+            .then(res => {
+                // console.log('stations data: ');
+                const stationID = res.data.data[0].id; // 03779
 
-
-// {
-//     "results" : [
-//         {
-//             "address_components": [
-//                 {
-//                     "long_name": "London",
-//                     "short_name": "London",
-//                     "types": ["locality", "political"]
-//                 },
-//                 {
-//                     "long_name": "London",
-//                     "short_name": "London",
-//                     "types": ["postal_town"]
-//                 },
-//                 {
-//                     "long_name": "Greater London",
-//                     "short_name": "Greater London",
-//                     "types": ["administrative_area_level_2", "political"]
-//                 },
-//                 {
-//                     "long_name": "England",
-//                     "short_name": "England",
-//                     "types": ["administrative_area_level_1", "political"]
-//                 },
-//                 {
-//                     "long_name": "United Kingdom",
-//                     "short_name": "GB",
-//                     "types": ["country", "political"]
-//                 }
-//             ],
-//             "formatted_address": "London, UK",
-//             "geometry": {
-//                 "bounds": {
-//                     "northeast": {
-//                         "lat": 51.6723432,
-//                         "lng": 0.148271
-//                     },
-//                     "southwest": {
-//                         "lat": 51.38494009999999,
-//                         "lng": -0.3514683
-//                     }
-//                 },
-//                 "location": {
-//                     "lat": 51.5072178,
-//                     "lng": -0.1275862
-//                 },
-//                 "location_type": "APPROXIMATE",
-//                 "viewport": {
-//                     "northeast": {
-//                         "lat": 51.6723432,
-//                         "lng": 0.148271
-//                     },
-//                     "southwest": {
-//                         "lat": 51.38494009999999,
-//                         "lng": -0.3514683
-//                     }
-//                 }
-//             },
-//             "place_id": "ChIJdd4hrwug2EcRmSrV3Vo6llI",
-//             "types": ["locality", "political"]
-//         }
-//     ],
-//         "status" : "OK"
-// }
-
-// Get nearby stations from coordinates
-// let options = {
-//     method: 'GET',
-//     url: 'https://meteostat.p.rapidapi.com/stations/nearby',
-//     params: { lat: '51.5085', lon: '-0.1257' },
-//     headers: {
-//         'X-RapidAPI-Key': 'ca2594298amsh94fb12fd4497783p1553c7jsn3ff6ba05d679',
-//         'X-RapidAPI-Host': 'meteostat.p.rapidapi.com'
-//     }
-// };
-
-// axios.request(options).then(function (response) {
-//     console.log(response.data);
-// }).catch(function (error) {
-//     console.error(error);
-// });
-
-// Get monthly station data from station ID
-// options = {
-//     method: 'GET',
-//     url: 'https://meteostat.p.rapidapi.com/stations/monthly',
-//     params: { station: '10637', start: '2020-01-01', end: '2020-12-31' },
-//     headers: {
-//         'X-RapidAPI-Key': '486cee67b7msh6fe5f060a910d1ap176ef4jsncf8e8f8d110e',
-//         'X-RapidAPI-Host': 'meteostat.p.rapidapi.com'
-//     }
-// };
-
-// axios.request(options).then(function (response) {
-//     console.log(response.data);
-// }).catch(function (error) {
-//     console.error(error);
-// });
+                const options = {
+                    method: 'GET',
+                    url: 'https://meteostat.p.rapidapi.com/stations/monthly',
+                    params: { station: stationID, start: '2020-01-01', end: '2020-12-31', units: 'imperial' },
+                    headers: {
+                        'X-RapidAPI-Key': '486cee67b7msh6fe5f060a910d1ap176ef4jsncf8e8f8d110e',
+                        'X-RapidAPI-Host': 'meteostat.p.rapidapi.com'
+                    }
+                };
+                axios.request(options)
+                    .then(res => {
+                        console.log('monthly station data: ')
+                        console.log(res.data.data);
+                    })
+            })
+    })
 
 
 
