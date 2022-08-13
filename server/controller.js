@@ -3,6 +3,7 @@ const axios = require('axios');
 const Controller = {
 
   getMonthlyData(req, res, next) {
+    let weather;
     console.log('req is: ', req.body.city);
     const cityName = req.body.city;
 
