@@ -4,12 +4,20 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import '../styles/styles.scss';
+import Navbar from './Navbar.jsx';
+import Searchbar from './Searchbar.jsx';
+import Signup from './Signup.jsx';
+import Login from './Login.jsx';
+
 
 const App = props => {
 
     return (
         <main>
-          <h1>"Hello World"</h1>
+          <Navbar/>
+          <Searchbar/>
+          <Signup />
+          <Login />
         </main>
     );
 }
