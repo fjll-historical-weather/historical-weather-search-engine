@@ -2,10 +2,12 @@
 
 import React from 'react';
 import App from './components/App.jsx';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-render(
-    < App />,
-    document.getElementById('root')
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
+    < App />
 ); 
