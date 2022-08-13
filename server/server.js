@@ -48,6 +48,7 @@ axios.get(url)
                         'X-RapidAPI-Host': 'meteostat.p.rapidapi.com'
                     }
                 };
+                // get the monthly station data from station id
                 axios.request(options)
                     .then(res => {
                         console.log('monthly station data: ')
