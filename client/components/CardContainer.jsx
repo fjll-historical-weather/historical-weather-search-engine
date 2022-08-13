@@ -11,7 +11,7 @@ const CardContainer = (props) => {
         <div className='cardContainer-div'>
             <h2> Where are we going? </h2>
             <div className='cardContainer'>
-                {/* <Card inputCity={props.inputCity} data={props.data}/> */}
+                <Card inputCity={props.inputCity} data={props.data} />
             </div>
 
         </div>

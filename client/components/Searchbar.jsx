@@ -5,10 +5,20 @@ import CardContainer from './CardContainer.jsx';
 
 const Searchbar = props => {
 
+  const [allData, setAllData] = useState()
+  const [isClicked, setIsClicked] = useState(false)
+
+  const handleClicked = () => {
+    isClicked ? setIsClicked(false) : setIsClicked(true)
+  }
+
+
   const handleSubmit = (e) => {
     //prevents the page from refreshing on submit
     e.preventDefault();
 
+    //toggles the isClicked state
+    handleClicked();
     //first determine is the input is a single city (string) or multiple citys (array of strings)
     //if e.target.firstChild.value is an array....do something
     //else if its just a single string, assign it to a const
@@ -17,14 +27,27 @@ const Searchbar = props => {
     const inputCity = e.target.firstChild.value;
     console.log('handleSubmit inputCity: ', inputCity)
 
-    //write HTTP request
+    //write HTTP request and save location data in our database
     axios({
       method: 'post',
       url: 'http://localhost:3000/search',
       data: { city: inputCity }
     })
-      .then(response => console.log('search POST response: ', response))
-      .catch(err => console.log('search POST ERROR: ', err))
+      // get the location data FROM our database
+      .then(
+        fetch('http://localhost:3000/search')
+          .then(res => res.json())
+          .then(data => {
+            console.log('front end!!!', data);
+            // setAllData(data[0])
+          })
+        // axios.get('http://localhost:3000/search')
+        //   .then(res => {
+        //     console.log(res.data);
+        //   })
+      )
+    // .then(response => console.log('search POST response: ', response))
+    // .catch(err => console.log('search POST ERROR: ', err))
   }
 
   return (
@@ -33,7 +56,7 @@ const Searchbar = props => {
         <input className="search-input" name="search-input" id="search-input" type="text" placeholder="Enter city name here..." required></input>
         <input className="submit-btn" type="submit" value="Search"></input>
       </form>
-      {/* <CardContainer inputCity={inputCity} data={portlandData}/> */}
+      {/* {isClicked ? : <CardContainer inputCity={inputCity} data={allData} />} */}
     </div>
   )
 }
