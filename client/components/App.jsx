@@ -6,7 +6,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import '../styles/styles.scss';
 import Navbar from './Navbar.jsx';
 import Searchbar from './Searchbar.jsx';
-import CardContainer from './CardContainer.jsx';
+import Signup from './Signup.jsx';
+import Login from './Login.jsx';
 
 
 const App = props => {
@@ -15,7 +16,8 @@ const App = props => {
         <main>
           <Navbar/>
           <Searchbar/>
-          <CardContainer />
+          <Signup />
+          <Login />
         </main>
     );
 }

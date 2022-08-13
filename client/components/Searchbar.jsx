@@ -1,31 +1,35 @@
 //client/components/Searchbar.jsx
-import React from 'react'; 
-import { render } from 'react-dom';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react'; 
+import axios from 'axios';
+import CardContainer from './CardContainer.jsx';
 
 const Searchbar = props => {
 
-    handleSubmit = () => {
-        //fetch// lets use axios
-    }
+  const handleSubmit = (e) => {
+    //prevents the page from refreshing on submit
+    e.preventDefault();
+
+    //store the input value in a const
+    const inputCity = e.target.firstChild.value;
+    console.log('handleSubmit inputCity: ', inputCity)
+
+    //write HTTP request
+    axios.post('/search', {inputCity} )
+      .then(response => console.log('search POST response: ', response))
+      .catch( err => console.log('search POST ERROR: ', err))
+  }
+   
     //need second input section for Date? (maybe just month?)
   return (
-    <div className="searchbar">
-        <form onSubmit={handleSubmit}>
-             <input className = "search-input" name="search-input" id="search-input" type="text" ></input>
-             <input className = "search-btn" type="submit" value="Search"></input>
+    <div className="searchbar-div">
+        <form className="searchbar" onSubmit={handleSubmit}>
+             <input className = "search-input" name="search-input" id="search-input" type="text" placeholder="Enter city name here..." required></input>
+             <input className = "submit-btn" type="submit" value="Search"></input>
         </form>
+        <CardContainer />
     </div>
   )
-
 }
-
-
-
-
-
-
-
 
 
 export default Searchbar;
