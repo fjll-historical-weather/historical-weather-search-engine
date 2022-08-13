@@ -1,5 +1,61 @@
 //client/styles/styles.scss
+$sky-50:#f0f9ff;
+$sky-100:#e0f2fe;
+$sky-200:#bae6fd;
+$sky-300:#7dd3fc;
+$sky-400: #38bdf8;
+$sky-500: #0ea5e9;
+$sky-600: #0284c7;
+$sky-700: #0369a1;
+$sky-800: #075985;
+$sky-900: #0c4a6e;
+$zinc-50: #fafafa; 
+$zinc-100: #f4f4f5;
+$zinc-200: #e4e4e7;
+$zinc-300: #d4d4d8;
+$zinc-400: #a1a1aa;
+$zinc-500: #71717a;
+$zinc-600: #52525b;
+$zinc-700: #3f3f46;
+$zinc-800: #27272a;
+$zinc-900: #171717;
 
-main{
-    color:red;
+body{
+    background-color:$zinc-900;
+    color:$zinc-300;
+    margin: 0px; 
 }
+
+.navbar {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  background-color: $sky-800;
+  padding: 1rem; 
+}
+
+.searchbar {
+    background-color: $zinc-800;
+    display: flex; 
+    justify-content: center;
+    padding: 1rem; 
+    align-items: center; 
+    form {
+        display:flex; 
+        justify-content:space-evenly;
+        align-items:center;
+        gap:2rem;
+        .search-input{
+            width:400px;
+        }
+        .search-btn{
+            text-decoration:none;
+            border:none;
+            background-color:$sky-600;
+            color:$zinc-300;
+            border-radius:0.5rem;
+            padding:0.5rem;
+        }
+    }
+}
+
