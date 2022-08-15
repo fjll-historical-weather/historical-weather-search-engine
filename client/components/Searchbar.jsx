@@ -29,13 +29,18 @@ const Searchbar = props => {
 
     //write HTTP request and save location data in our database
     axios({
-      method: 'post',
+      method: 'POST',
       url: 'http://localhost:3000/search',
       data: { city: inputCity }
     })
       // get the location data FROM our database
       .then(
-        fetch('http://localhost:3000/search')
+        axios({
+          method: 'POST',
+          url: 'http://localhost:3000/getCity',
+          // headers: { 'Content-Type': 'application/json' },
+          data: { cityName: inputCity }
+        })
           .then(res => res.json())
           .then(data => {
             console.log('front end!!!', data);

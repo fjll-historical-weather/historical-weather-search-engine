@@ -6,7 +6,7 @@ const Controller = {
   getAllData(req, res, next) {
     console.log('getting all data!');
     Location.find({}, (err, locations) => {
-      //console.log('locations are: ', locations);
+      // console.log('locations are: ', locations);
       res.send(locations);
     })
     // return next();
@@ -15,7 +15,8 @@ const Controller = {
   getData(req, res, next) {
     console.log('getData req.body: ', req.body)
     const cityName = req.body.cityName;
-    Location.findOne({cityName}, (err, location) => {
+    Location.findOne({ cityName }, (err, location) => {
+      console.log('found location is: ', location)
       res.send(location)
     })
   },
@@ -68,7 +69,7 @@ const Controller = {
                 newLocation.save((err, location) => {
                   if (err) return next(err)
                   else {
-                    // console.log(location)
+                    console.log('saved location is:', location)
                     return next();
                   }
                 })

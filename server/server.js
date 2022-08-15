@@ -41,30 +41,30 @@ router.post('/search', Controller.getMonthlyData, (req, res, next) => {
     // .json(res.locals.weather);
 });
 
-router.get('/search', Controller.getAllData, (req, res, next) => {
+router.post('/getCity', Controller.getData, (req, res, next) => {
     res.status(200);
 })
 
 
 //SIGNUP routes
-app.get('/signup', (req,res) => {
+app.get('/signup', (req, res) => {
     //go to signup page
 });
 
-app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res, err) =>{
+app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res, err) => {
     //successful sign up, redirect to '/favorites'
     //else, redirect back to '/signup'
 })
 
 //LOGIN routes
-app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res, err) =>{
+app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res, err) => {
     //success should redirect to '/favorites'
     //else, redirect to '/signup'
 })
 
 //AUTHORIZED routes
 app.get('/favorites', (req, res) => {
-    
+
 })
 
 app.get('/favorites/users', userController.getAllUsers, (req, res) => {
@@ -72,27 +72,15 @@ app.get('/favorites/users', userController.getAllUsers, (req, res) => {
 })
 
 //404 Handler
-app.use('*', (req,res) => {
+app.use('*', (req, res) => {
     res.status(404).send('Not Found');
-  });
+});
 
 //Global Error Handler
 app.use((err, req, res, next) => {
     console.log(err);
     res.status(500).send({ error: err });
 });
-
-
-
-
-
-
-
-// // user inputs a city name
-// const cityName = 'Portland';
-
-
-
 
 
 app.listen(PORT, () => {
