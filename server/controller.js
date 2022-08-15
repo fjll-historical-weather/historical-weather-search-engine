@@ -22,7 +22,7 @@ const Controller = {
 
   getMonthlyData(req, res, next) {
     // let weather;
-    // console.log('req is: ', req.body.city);
+    console.log('getMonthlyData req.body.city is: ', req.body.city);
     const cityName = req.body.city;
 
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&key=AIzaSyBtfcxOznbnQFJHSdQTgsSZVRbvpOZNdKU`;
