@@ -35,15 +35,17 @@ app.use('/', router);
 
 // Get monthly weather data for a city
 // http://localhost:3000/search
-router.post('/search', Controller.getMonthlyData, (req, res, next) => {
+router.post('/search', Controller.getMonthlyData, Controller.getData, (req, res, next) => {
     // console.log('res.locals in server.js: ', res.locals.weather);
-    res.sendStatus(200);
+    // console.log('city data in server: ', res.locals.cityData);
+    // res.sendStatus(200);
     // .json(res.locals.weather);
+    // having two sends causes overwritting 
 });
 
-router.post('/getCity', Controller.getData, (req, res, next) => {
-    res.status(200);
-})
+// router.post('/getCity', Controller.getData, (req, res, next) => {
+//     res.status(200);
+// })
 
 
 //SIGNUP routes

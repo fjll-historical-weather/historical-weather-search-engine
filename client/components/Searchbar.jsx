@@ -33,24 +33,28 @@ const Searchbar = props => {
       url: 'http://localhost:3000/search',
       data: { city: inputCity }
     })
-      // get the location data FROM our database
-      .then(
-        axios({
-          method: 'POST',
-          url: 'http://localhost:3000/getCity',
-          // headers: { 'Content-Type': 'application/json' },
-          data: { cityName: inputCity }
-        })
-          .then(res => res.json())
-          .then(data => {
-            console.log('front end!!!', data);
-            // setAllData(data[0])
-          })
-        // axios.get('http://localhost:3000/search')
-        //   .then(res => {
-        //     console.log(res.data);
-        //   })
-      )
+      // .then(res => res.json())
+      .then(data => {
+        console.log('front end!!', data.data);
+      })
+    // // get the location data FROM our database
+    // .then(
+    //   axios({
+    //     method: 'POST',
+    //     url: 'http://localhost:3000/getCity',
+    //     // headers: { 'Content-Type': 'application/json' },
+    //     data: { cityName: inputCity }
+    //   })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //       console.log('front end!!!', data);
+    //       // setAllData(data[0])
+    //     })
+    // axios.get('http://localhost:3000/search')
+    //   .then(res => {
+    //     console.log(res.data);
+    //   })
+
     // .then(response => console.log('search POST response: ', response))
     // .catch(err => console.log('search POST ERROR: ', err))
   }
