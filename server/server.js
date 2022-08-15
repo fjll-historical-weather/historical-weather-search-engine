@@ -6,6 +6,11 @@ const coreJsCompat = require('@babel/preset-env/data/core-js-compat');
 const Controller = require('./controller');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const userController = require('./userController');
+const cookieController = require('./cookieController');
+const sessionController = require('./sessionController');
 
 const PORT = 3000;
 
@@ -41,7 +46,41 @@ router.get('/search', Controller.getAllData, (req, res, next) => {
 })
 
 
+//SIGNUP routes
+app.get('/signup', (req,res) => {
+    //go to signup page
+});
 
+app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res, err) =>{
+    //successful sign up, redirect to '/favorites'
+    //else, redirect back to '/signup'
+})
+
+//LOGIN routes
+app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res, err) =>{
+    //success should redirect to '/favorites'
+    //else, redirect to '/signup'
+})
+
+//AUTHORIZED routes
+app.get('/favorites', (req, res) => {
+    
+})
+
+app.get('/favorites/users', userController.getAllUsers, (req, res) => {
+    //res.send({users: res.locals.users});
+})
+
+//404 Handler
+app.use('*', (req,res) => {
+    res.status(404).send('Not Found');
+  });
+
+//Global Error Handler
+app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(500).send({ error: err });
+});
 
 
 
