@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 
-// const uri = 'mongodb+srv://starnose:9ADoo%aaZx6s@cluster0.slydjzd.mongodb.net/?retryWrites=true&w=majority'
+
 mongoose.connect('mongodb+srv://starnose:9ADoo%25aaZx6s@cluster0.slydjzd.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.once('open', () => console.log('Connected to database.'));
 
@@ -28,40 +28,26 @@ app.get('/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname, '../index.html'))
 })
 
-
 const router = express.Router();
 app.use('/', router);
-
 
 // Get monthly weather data for a city
 // http://localhost:3000/search
 router.post('/search', Controller.getMonthlyData, Controller.getData, (req, res, next) => {
-    // console.log('res.locals in server.js: ', res.locals.weather);
-    // console.log('city data in server: ', res.locals.cityData);
-    // res.sendStatus(200);
-    // .json(res.locals.weather);
-    // having two sends causes overwritting 
+    // sends info back in via middleware getData
 });
-
-// router.post('/getCity', Controller.getData, (req, res, next) => {
-//     res.status(200);
-// })
 
 
 //SIGNUP routes
-app.get('/signup', (req, res) => {
-    //go to signup page
-});
-
-app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res, err) => {
-    //successful sign up, redirect to '/favorites'
-    //else, redirect back to '/signup'
+router.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res, err) => {
+    // redirect happens in controllers
 })
 
 //LOGIN routes
-app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res, err) => {
-    //success should redirect to '/favorites'
-    //else, redirect to '/signup'
+router.post('/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res, err) => {
+    // redirects happens in controllers
+    console.log('app.post login sucessful')
+    res.send(res.locals.path);
 })
 
 //AUTHORIZED routes
@@ -70,7 +56,7 @@ app.get('/favorites', (req, res) => {
 })
 
 app.get('/favorites/users', userController.getAllUsers, (req, res) => {
-    //res.send({users: res.locals.users});
+    res.send({users: res.locals.users});
 })
 
 //404 Handler
