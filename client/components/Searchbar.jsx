@@ -18,7 +18,7 @@ const Searchbar = props => {
 
   const handleClicked = () => {
     isClicked ? setIsClicked(false) : setIsClicked(true)
-  
+
   }
 
 
@@ -38,25 +38,16 @@ const Searchbar = props => {
 
     //write HTTP request and save location data in our database
     axios({
-      method: 'post',
+      method: 'POST',
       url: 'http://localhost:3000/search',
       data: { city: inputCity }
     })
-      // get the location data FROM our database
-      .then(
-        fetch('http://localhost:3000/search')
-          .then(res => res.json())
-          .then(data => {
-            console.log('fetch data data[0]', data[0]);
-            setCityData(data[0].cityData)
-            setCityName(data[0].cityName)
-            
-          })
-          .then(() => {
-            console.log('cityData after fetch: ', cityData)
-            console.log('cityName after fetch: ', cityName)
-          })
-      )
+      // .then(res => res.json())
+      .then(data => {
+        setCityData(data.data.cityData);
+        setCityName(data.data.cityName);
+        console.log('front end!!', data.data);
+      })
   }
 
   return (
@@ -68,7 +59,7 @@ const Searchbar = props => {
       {/* {isClicked ? <CardContainer data={cityData}/> : <div><h3>Cards will render here</h3></div>} */}
       {/* <CardContainer data={cityData}/> */}
       {/* {isClicked ? <div><h3>Clicked is true, show card container</h3></div> : <div><h3>Clicked is false, show nothing</h3></div>} */}
-      {isClicked ? <CardContainer city={cityName} data={cityData}/> : <div><h3>Clicked is false, show nothing</h3></div>}
+      {isClicked ? <CardContainer city={cityName} data={cityData} /> : <div><h3>Clicked is false, show nothing</h3></div>}
     </div>
   )
 }

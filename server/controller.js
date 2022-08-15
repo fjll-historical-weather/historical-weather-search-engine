@@ -3,28 +3,18 @@ const Location = require('./model.js')
 
 const Controller = {
 
-  getAllData(req, res, next) {
-    console.log('getting all data!');
-    Location.find({}, (err, locations) => {
-      //console.log('locations are: ', locations);
-      res.send(locations);
-    })
-    // return next();
-  },
-
   getData(req, res, next) {
-    console.log('getData req.body: ', req.body)
-    const cityName = req.body.cityName;
-    Location.findOne({cityName}, (err, location) => {
-      res.send(location)
+    const cityName = res.locals.cityName;
+    Location.findOne({ cityName }, (err, location) => {
+      // console.log('found location is: ', location);
+      res.send(location);
+      return next();
     })
   },
 
   getMonthlyData(req, res, next) {
-    // let weather;
-    console.log('getMonthlyData req.body.city is: ', req.body.city);
     const cityName = req.body.city;
-
+    res.locals.cityName = cityName;
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&key=AIzaSyBtfcxOznbnQFJHSdQTgsSZVRbvpOZNdKU`;
     // Get coordinates from city name
     axios.get(url)
@@ -68,7 +58,7 @@ const Controller = {
                 newLocation.save((err, location) => {
                   if (err) return next(err)
                   else {
-                    // console.log(location)
+                    console.log('saved location is:', location)
                     return next();
                   }
                 })

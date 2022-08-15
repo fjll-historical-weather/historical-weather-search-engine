@@ -35,36 +35,38 @@ app.use('/', router);
 
 // Get monthly weather data for a city
 // http://localhost:3000/search
-router.post('/search', Controller.getMonthlyData, (req, res, next) => {
+router.post('/search', Controller.getMonthlyData, Controller.getData, (req, res, next) => {
     // console.log('res.locals in server.js: ', res.locals.weather);
-    res.sendStatus(200);
+    // console.log('city data in server: ', res.locals.cityData);
+    // res.sendStatus(200);
     // .json(res.locals.weather);
+    // having two sends causes overwritting 
 });
 
-router.get('/search', Controller.getAllData, (req, res, next) => {
-    res.status(200);
-})
+// router.post('/getCity', Controller.getData, (req, res, next) => {
+//     res.status(200);
+// })
 
 
 //SIGNUP routes
-app.get('/signup', (req,res) => {
+app.get('/signup', (req, res) => {
     //go to signup page
 });
 
-app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res, err) =>{
+app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res, err) => {
     //successful sign up, redirect to '/favorites'
     //else, redirect back to '/signup'
 })
 
 //LOGIN routes
-app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res, err) =>{
+app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res, err) => {
     //success should redirect to '/favorites'
     //else, redirect to '/signup'
 })
 
 //AUTHORIZED routes
 app.get('/favorites', (req, res) => {
-    
+
 })
 
 app.get('/favorites/users', userController.getAllUsers, (req, res) => {
@@ -72,27 +74,15 @@ app.get('/favorites/users', userController.getAllUsers, (req, res) => {
 })
 
 //404 Handler
-app.use('*', (req,res) => {
+app.use('*', (req, res) => {
     res.status(404).send('Not Found');
-  });
+});
 
 //Global Error Handler
 app.use((err, req, res, next) => {
     console.log(err);
     res.status(500).send({ error: err });
 });
-
-
-
-
-
-
-
-// // user inputs a city name
-// const cityName = 'Portland';
-
-
-
 
 
 app.listen(PORT, () => {
