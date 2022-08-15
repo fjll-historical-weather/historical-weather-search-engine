@@ -7,35 +7,27 @@ import {AreaChart, Area, Tooltip, XAxis, YAxis, CartesianGrid, linearGradient} f
 
 
 const Card = props => {
-    const [month, setMonth] = useState(props.data[0].date);
+    //const [month, setMonth] = useState(props.data[0].date);
     const [avgTemp, setAvgTemp] = useState(props.data[0].tavg);
     const [minTemp, setMinTemp] = useState(props.data[0].tmin);
     const [maxTemp, setMaxTemp] = useState(props.data[0].tmax);
-    const [inputCity, setInputCity] = useState(props.inputCity);
-    console.log('Cards.jsx props: ', props.data[0])
+    const [city, setCity] = useState(props.city);
+    console.log('Cards.jsx props.data: ', props.data[0])
     //img = can be if we have time 
+
+    useEffect(() =>{
+
+    }, [city, avgTemp])
     return (
         <div className='card'>
             <div className="card-header">
-                <h3 className='cardTitle'> {inputCity} </h3> 
+                {/* <h3 className='cardTitle'> {inputCity} </h3>  */}
+                <h3>Input City : {props.city}</h3> 
                 <div>
                     <img/> 
                 </div>
             </div>
-            {/* <ul className='statList'>
-                <li>
-                    <label className='cardStatLabel'>Month: {month}</label> 
-                </li>
-                <li> 
-                    <label className='cardStatLabel'>Average Temp: {avgTemp} F</label> 
-                </li>
-                <li> 
-                    <label className='cardStatLabel'>Lowest Temp: {minTemp} F</label>
-                </li>
-                <li> 
-                    <label className='cardStatLabel'>Highest Temp: {maxTemp} F</label> 
-                </li>
-            </ul> */}
+
             <AreaChart width={700} height={250} data={props.data}
                 margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <defs>
