@@ -21,7 +21,7 @@ $zinc-800: #27272a;
 $zinc-900: #171717;
 
 body{
-    background-color:$zinc-900;
+    background-color:$sky-100;
     color:$zinc-300;
     margin: 0px; 
     font-family: 'Raleway', sans-serif;
@@ -31,7 +31,7 @@ body{
   display: flex; 
   justify-content: space-evenly;
   align-items: center;
-  background-color: $zinc-600;
+  background-color: $zinc-100;
   padding: 0.5rem; 
 }
 
@@ -44,7 +44,7 @@ body{
 }
 
 .searchbar {
-    background-color: $zinc-800;
+    background-color: $zinc-200;
     display: flex; 
     justify-content: center;
     padding: 1rem; 

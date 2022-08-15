@@ -7,28 +7,26 @@ import {AreaChart, Area, Tooltip, XAxis, YAxis, CartesianGrid, linearGradient} f
 
 
 const Card = props => {
-    //const [month, setMonth] = useState(props.data[0].date);
-    const [avgTemp, setAvgTemp] = useState(props.data[0].tavg);
-    const [minTemp, setMinTemp] = useState(props.data[0].tmin);
-    const [maxTemp, setMaxTemp] = useState(props.data[0].tmax);
-    const [city, setCity] = useState(props.city);
-    console.log('Cards.jsx props.data: ', props.data[0])
-    //img = can be if we have time 
+
+    const [cityData, setCityData] = useState(props.data)
+    const [cityName, setCityName] = useState(props.city)
 
     useEffect(() =>{
+        console.log('Card.jsx useEffect cityData: ', cityData)
+        console.log('Card.jsx useEffect cityName: ', cityName)
+    }, [cityData, cityName])
 
-    }, [city, avgTemp])
     return (
         <div className='card'>
             <div className="card-header">
-                {/* <h3 className='cardTitle'> {inputCity} </h3>  */}
-                <h3>Input City : {props.city}</h3> 
+                <h3>City Name: {cityName.toUpperCase()}</h3> 
                 <div>
                     <img/> 
                 </div>
             </div>
 
-            <AreaChart width={700} height={250} data={props.data}
+            
+            <AreaChart width={700} height={250} data={cityData}
                 margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <defs>
                     <linearGradient id="colorTMax" x1="0" y1="0" x2="0" y2="1">

@@ -37,6 +37,7 @@ userController.createUser = (req, res, next) => {
     if(err) {
       return next({error: err});
     }else{
+      console.log('createUser user._doc: ', user._doc)
       res.locals.user = user._doc;
       return next()
     }
@@ -52,30 +53,36 @@ userController.createUser = (req, res, next) => {
 userController.verifyUser = (req, res, next) => {
   // write code here
   const { username, password } = req.body;
+  // console.log('verify username: ',username);
+  // console.log('verify password: ',password);
   //check against res.locals.users if username exists and password matches
   if (!username || !password)
     return next('Missing username or password in userController.verifyUser');
 
-  User.findOne({ username }, (err, user) => {
+  User.findOne({ username: username }, (err, user) => {
     if (err) {
-      return next('Error in userController.verifyUser: ' + JSON.stringify(err));
+      return next('Error in userController.verifyUser (first err): ' + JSON.stringify(err));
     } else if (!user) {
-      res.redirect('/signup');
+      console.log('verifyUser user does not exist');
+      // res.redirect('/signup');
+      res.locals.path='/signup';
+      return next();
+     
     } else {
       bcrypt.compare(password, user.password).then((result) => {
         if (!result) {
-          res.redirect('/signup');
+          // res.redirect('/login');
+          res.locals.path = '/login';
+          console.log('wrong password!');
+          return next()
         } else {
           res.locals.user = user;
+          res.locals.path = '/';
           return next();
         }
       });
     }
-  }).catch((err) => {
-    next({
-      error: 'Error in userController.verifyUser: ' + JSON.stringify(err),
-    });
-  });
+  })
 };
 
 module.exports = userController;
