@@ -12,6 +12,14 @@ const Controller = {
     // return next();
   },
 
+  getData(req, res, next) {
+    console.log('getData req.body: ', req.body)
+    const cityName = req.body.cityName;
+    Location.findOne({cityName}, (err, location) => {
+      res.send(location)
+    })
+  },
+
   getMonthlyData(req, res, next) {
     // let weather;
     // console.log('req is: ', req.body.city);
@@ -21,7 +29,7 @@ const Controller = {
     // Get coordinates from city name
     axios.get(url)
       .then(res => {
-        const coordinates = { lat: res.data.results[0].geometry.location.lat, lon: res.data.results[0].geometry.location.lng } // returns { lat: 51.5, lon: -0.127 }
+        const coordinates = { lat: res.data.results[0].geometry.location.lat, lon: res.data.results[0].geometry.location.lng } // returns { lat: 51.5, lon: -0.127 }r
         console.log('coordinates are: ', coordinates);
         // Get nearby stations from coordinates
         const options = {

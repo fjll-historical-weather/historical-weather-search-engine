@@ -8,9 +8,9 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const userController = require('./controllers/userController');
-const cookieController = require('./controllers/cookieController');
-const sessionController = require('./controllers/sessionController');
+const userController = require('./userController');
+const cookieController = require('./cookieController');
+const sessionController = require('./sessionController');
 
 const PORT = 3000;
 

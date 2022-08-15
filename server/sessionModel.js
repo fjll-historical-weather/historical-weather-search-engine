@@ -1,6 +1,6 @@
 //server/sessionModel.js
 const mongoose = require('mongoose');
-constSchema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const sessionSchema = new Schema({
     cookieId: { type: String, required: true, unique: true },
