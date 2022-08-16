@@ -24,7 +24,8 @@ const Login = (props) => {
         })
          .then(res => {
             console.log('Login.jsx .then res.data: ',res.data);
-            navigate(`${res.data}`, {replace:true})
+            console.log('logged in?: ', res.data.loggedIn); // true
+            navigate(`${res.data.path}`, {replace:true})
         });
     }
 

@@ -22,7 +22,7 @@ $zinc-900: #171717;
 
 body{
     background-color:$sky-100;
-    color:$zinc-300;
+    color:$zinc-600;
     margin: 0px; 
     font-family: 'Raleway', sans-serif;
 }
@@ -44,7 +44,7 @@ body{
 }
 
 .searchbar {
-    background-color: $zinc-200;
+    background-color: $sky-100;
     display: flex; 
     justify-content: center;
     padding: 1rem; 
@@ -57,26 +57,42 @@ body{
         gap:2rem;
         width:400px;
         margin-right:2rem;
+        padding:1.5rem;
+        border:1px solid $zinc-600;
+        border-radius:0.5rem;
+        background-color:$sky-50;
+        font-size:2.5rem;
+        color:$zinc-600;
     }
     .search-btn{
         text-decoration:none;
         border:none;
-        background-color:$sky-600;
-        color:$zinc-300;
         border-radius:0.5rem;
-        padding:0.5rem;
+        padding:1rem;
+        background-color:$sky-300;
+        color:$zinc-600;
+        transition: 0.3s;
+        font-size:1rem;
+        font-weight:200;
+        &:hover{
+            background-color:$sky-400;
+            cursor:pointer;
+        }
+        &:active{
+            background-color:$sky-500;
+        }
     }
 
 }
 
 .signup-div, .login-div{
-    background-color:$zinc-800;
+    background-color:$sky-100;
     display:flex;
     justify-content:center;
     align-items:center;
-    
+    padding-top:4rem;
     .signup-form, .login-form{
-        background-color:$zinc-700;
+        background-color:$sky-200;
         display:flex;
         flex-direction:column;
         justify-content:center;
@@ -101,13 +117,15 @@ body{
     border:none;
     border-radius:0.5rem;
     padding:0.5rem;
-    background-color:$sky-700;
-    color:$zinc-300;
+    background-color:$sky-200;
+    color:$zinc-600;
+    transition: 0.3s;
     &:hover{
-        background-color:$sky-600;
+        background-color:$sky-300;
+        cursor:pointer;
     }
     &:active{
-        background-color:$sky-900;
+        background-color:$sky-400;
     }
 }
 
@@ -127,19 +145,18 @@ body{
 }
 
 .card {
-    background-color: $zinc-500; 
+    background-color: $sky-100; 
     color:$zinc-200;
     padding: 1rem;
-    border: 1px solid $zinc-200;
-    border-radius: 0.25rem; 
     display:flex;
     flex-direction: column;
     justify-content:center;
     align-items:flex-start;
     
-    .cardTitle {
+    .card-header {
         font-style: bold;
         width:100%;
+        color:$zinc-800;
     }
     .statList{
         list-style:none;
@@ -157,6 +174,19 @@ body{
     }
 
 }
+
+::-webkit-input-placeholder {
+    font-style: italic;
+ }
+ :-moz-placeholder {
+    font-style: italic;  
+ }
+ ::-moz-placeholder {
+    font-style: italic;  
+ }
+ :-ms-input-placeholder {  
+    font-style: italic; 
+ }
 
 
 
