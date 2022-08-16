@@ -1,6 +1,6 @@
 //client/components/App.jsx
 
-import React from 'react'; 
+import React , {useState, useEffect} from 'react'; 
 import { render } from 'react-dom';
 import { Outlet } from 'react-router-dom';
 import '../styles/styles.scss';
@@ -13,7 +13,7 @@ const App = props => {
     return (
         <main>
           <Navbar/>
-          <Searchbar/>
+          <Searchbar />
         </main>
     );
 }

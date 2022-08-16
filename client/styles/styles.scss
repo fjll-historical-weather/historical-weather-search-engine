@@ -25,10 +25,13 @@ body{
     color:$zinc-600;
     margin: 0px; 
     font-family: 'Raleway', sans-serif;
+    
 }
+
 
 .navbar {
   display: flex; 
+  flex-direction:row;
   justify-content: space-evenly;
   align-items: center;
   background-color: $zinc-100;
@@ -154,9 +157,18 @@ body{
     align-items:flex-start;
     
     .card-header {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:1rem;
         font-style: bold;
         width:100%;
         color:$zinc-800;
+        svg{
+             &:hover{
+                color:red;
+             }
+        }
     }
     .statList{
         list-style:none;

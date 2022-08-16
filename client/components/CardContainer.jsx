@@ -7,7 +7,7 @@ const CardContainer = (props) => {
 
     return (
         <div className='cardContainer-div'>
-            <h2> Where are we going? </h2>
+            <h2>Average Temperature</h2>
             <div className='cardContainer'>
             <Card city={props.city} data={props.data}/>
             </div>

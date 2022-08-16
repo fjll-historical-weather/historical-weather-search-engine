@@ -1,9 +1,18 @@
 //client/components/Login.jsx
-import React from 'react'
-import {useNavigate} from 'react-router-dom';
+import React, {useState, useEffect} from 'react'
+import {useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
 
+
 const Login = (props) => {
+
+    const [errorMessages, setErrorMessages] = useState({});
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [whoLogged, setWhoLogged] = useState()
+
+    useEffect(()=>{
+
+    },[isSubmitted, whoLogged])
 
     const navigate = useNavigate();
 
@@ -25,18 +34,26 @@ const Login = (props) => {
          .then(res => {
             console.log('Login.jsx .then res.data: ',res.data);
             console.log('logged in?: ', res.data.loggedIn); // true
-            navigate(`${res.data.path}`, {replace:true})
+            console.log('who logged in? ',res.data.user.username)
+            //navigate(`${res.data.path}`, {replace:true})
+            setIsSubmitted(res.data.loggedIn)
+            setWhoLogged(res.data.user.username.toUpperCase())
         });
     }
 
+    const renderForm = (
+        <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        <input className="form-input" type="text" name="username" placeholder="Username"></input>
+        <input className="form-input" type="password" name="password" placeholder="Password"></input>
+        <input className = "submit-btn" type="submit" value="Login"></input>
+        <Link to="/signup">Don't have an account? Click here!</Link>
+        </form>
+    )
+
     return(
         <div className="login-div">
-            <form className="login-form" onSubmit={handleSubmit}>
-                <h2>Login</h2>
-                <input className="form-input" type="text" name="username" placeholder="Username"></input>
-                <input className="form-input" type="password" name="password" placeholder="Password"></input>
-                <input className = "submit-btn" type="submit" value="Login"></input>
-            </form>
+            {isSubmitted ? <div className="login-success"><h3>Successfully logged in!</h3><h3>Welcome {whoLogged}!</h3><Link to='/' id="enter-link">Click Here</Link></div> : renderForm}
         </div>
     )
 }

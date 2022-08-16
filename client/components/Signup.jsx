@@ -1,7 +1,7 @@
 0//client/components/Signup.jsx
 import React from 'react';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 
 const Signup = (props) => {
     
@@ -30,6 +30,7 @@ const Signup = (props) => {
                 <input className="form-input" type="text" name="username" placeholder="Username"></input>
                 <input className="form-input" type="password" name="password" placeholder="Password"></input>
                 <input className = "submit-btn" type="submit" value="Signup"></input>
+                <Link to="/login">Already have an account? Click here!</Link>
             </form>
         </div>
     )
