@@ -11,6 +11,25 @@ const Card = props => {
     const [cityData, setCityData] = useState(props.data)
     const [cityName, setCityName] = useState(props.city)
 
+    const [month, setMonth] = useState(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'])
+    const [newData, setNewData] = useState([])
+
+    useEffect(() => {
+        const array = []
+        for (let i = 0; i < month.length; i++) {
+            const newMonth = month[i]
+            const newObj = {
+                date: newMonth,
+                tavg: cityData[i].tavg,
+                tmax: cityData[i].tmax,
+                tmin: cityData[i].tmin
+            }
+            array.push(newObj)
+        }
+        setNewData(array)
+    }, [])
+    
+
     useEffect(() =>{
         console.log('Card.jsx useEffect cityData: ', cityData)
         console.log('Card.jsx useEffect cityName: ', cityName)
@@ -26,8 +45,8 @@ const Card = props => {
             </div>
 
             
-            <AreaChart width={700} height={250} data={cityData}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <AreaChart width={800} height={300} data={newData}
+                margin={{ top: 10, right: 30, left: 20, bottom: 10 }} fill="#27272a">
                 <defs>
                     <linearGradient id="colorTMax" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#f87171" stopOpacity={0.8}/>
@@ -43,10 +62,11 @@ const Card = props => {
                     </linearGradient>
                     
                 </defs>
-                <XAxis dataKey="date" />
-                <YAxis label={{value: 'Degrees °F', angle:-90}}/>
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
+                <XAxis stroke="#27272a" dataKey="date" />
+                <YAxis stroke="#27272a" label={{value: 'Degrees °F', angle:-90}} padding={{left:20, right:20}}/>
+                <CartesianGrid fill="#e0f2fe" stroke="#27272a" strokeDasharray="3 3" />
+                <Tooltip/>
+                <Area type="monotone" dataKey="date" stroke="#27272a" fillOpacity={1} fill="#27272a"/>
                 <Area type="monotone" dataKey="tmax" stroke="#f87171" fillOpacity={1} fill="url(#colorTMax)" />
                 <Area type="monotone" dataKey="tavg" stroke="#82ca9d" fillOpacity={1} fill="url(#colorTAvg)" />
                 <Area type="monotone" dataKey="tmin" stroke="#8884d8" fillOpacity={1} fill="url(#colorTMin)" />

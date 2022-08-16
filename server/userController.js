@@ -78,6 +78,7 @@ userController.verifyUser = (req, res, next) => {
         } else {
           res.locals.user = user;
           res.locals.path = '/';
+          res.locals.loggedIn = true;
           return next();
         }
       });

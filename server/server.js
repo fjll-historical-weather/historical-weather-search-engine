@@ -47,7 +47,7 @@ router.post('/signup', userController.createUser, cookieController.setSSIDCookie
 router.post('/login', userController.verifyUser, cookieController.setSSIDCookie, (req, res, err) => {
     // redirects happens in controllers
     console.log('app.post login sucessful')
-    res.send(res.locals.path);
+    res.send(res.locals);
 })
 
 //AUTHORIZED routes

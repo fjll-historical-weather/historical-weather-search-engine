@@ -58,8 +58,8 @@ const Searchbar = props => {
   return (
     <div className="searchbar-div">
       <form className="searchbar" onSubmit={handleSubmit}>
-        <input className="search-input" name="search-input" id="search-input" type="text" placeholder="Enter city name here..." required></input>
-        <input className="submit-btn" type="submit" value="Search"></input>
+        <input className="search-input" name="search-input" id="search-input" type="text" placeholder="London" required></input>
+        <input className="search-btn" type="submit" value="Search"></input>
       </form>
       {isClicked ? <CardContainer city={cityName} data={cityData} /> : <div><h3>Enter city name above...</h3></div>}
     </div>
