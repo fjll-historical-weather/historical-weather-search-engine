@@ -1,7 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+require("dotenv").config();
 
-
+mongoose.connect(`mongodb+srv://${process.env.MONGOUSER}:${process.env.MONGOPASSWORD}@cluster0.txufs6f.mongodb.net/?retryWrites=true&w=majority`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'weatherApp'
+})
+    .then(() => console.log('Connected to Mongo DB.'))
+    .catch(err => console.log(err));
 
 
 

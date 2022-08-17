@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Location } = require('./dbModels/model.js')
+const { Location } = require('../model.js')
 
 const Controller = {
 

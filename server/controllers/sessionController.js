@@ -1,5 +1,5 @@
 //server/sessionController.js
-const {Session} = require('./dbModels/model.js');
+const {Session} = require('../model.js');
 sessionController = {}
 
 sessionController.isLoggedIn = (req, res, next) => {
