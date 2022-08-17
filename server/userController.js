@@ -1,5 +1,5 @@
 //server/userController.js
-const User = require('./userModel');
+const {User} = require('./dbModels/model.js');
 const fs = require('fs');
 const userController = {};
 const bcrypt = require('bcrypt');
