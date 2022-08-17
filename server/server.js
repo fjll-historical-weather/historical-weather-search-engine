@@ -4,6 +4,7 @@ const express = require('express');
 const axios = require('axios');
 const coreJsCompat = require('@babel/preset-env/data/core-js-compat');
 const Controller = require('./controller');
+require("dotenv").config();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -21,8 +22,13 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-mongoose.connect('mongodb+srv://starnose:9ADoo%25aaZx6s@cluster0.slydjzd.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connection.once('open', () => console.log('Connected to database.'));
+mongoose.connect(`mongodb+srv://${process.env.MONGOUSER}:${process.env.MONGOPASSWORD}@cluster0.txufs6f.mongodb.net/?retryWrites=true&w=majority`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'weatherApp'
+})
+    .then(() => console.log('Connected to Mongo DB.'))
+    .catch(err => console.log(err));
 
 app.get('/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname, '../index.html'))
@@ -40,7 +46,8 @@ router.post('/search', Controller.getMonthlyData, Controller.getData, (req, res,
 
 //SIGNUP routes
 router.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res, err) => {
-    // redirect happens in controllers
+    // send response back to front-end and do redirect at frontend
+    res.status(200).send();
 })
 
 //LOGIN routes
